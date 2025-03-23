@@ -14,7 +14,13 @@ export default function login() {
       const { createdSessionId, setActive } = await startSSOFlow({
         strategy: "oauth_google",
       });
-    } catch (error) {}
+      if (setActive && createdSessionId) {
+        setActive({ session: createdSessionId });
+        router.replace("/(tabs)/home");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <View style={styles.container}>
@@ -32,7 +38,10 @@ export default function login() {
         />
       </View>
       <View style={styles.loginSection}>
-        <TouchableOpacity style={styles.googleButton}>
+        <TouchableOpacity
+          style={styles.googleButton}
+          onPress={handleGoogleLogin}
+        >
           <View style={styles.googleIconContainer}>
             <Ionicons name="logo-google" size={28} color={COLORS.primary} />
           </View>
