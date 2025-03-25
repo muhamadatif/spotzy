@@ -84,4 +84,11 @@ export const styles = StyleSheet.create({
     color: COLORS.grey,
     maxWidth: 280,
   },
+  center: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    width: "100%",
+  },
 });

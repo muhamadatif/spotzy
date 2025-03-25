@@ -9,7 +9,7 @@ export const generateUploadUrl = mutation(async (ctx) => {
 
 export const createPost = mutation({
   args: {
-    catption: v.string(),
+    caption: v.string(),
     storageId: v.id("_storage"),
   },
   handler: async (ctx, args) => {
@@ -32,7 +32,7 @@ export const createPost = mutation({
       userId: currentUser._id,
       imageUrl,
       storageId: args.storageId,
-      caption: args.catption,
+      caption: args.caption,
       likes: 0,
       comments: 0,
     });

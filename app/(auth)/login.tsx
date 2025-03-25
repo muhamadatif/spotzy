@@ -1,27 +1,48 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  // Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import React, { useState } from "react";
 import { styles } from "@/styles/auth.styles";
 import Logo from "@/components/Logo";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/theme";
 import { useSSO } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
+import { Image } from "expo-image";
 export default function login() {
+  const [loading, setLoading] = useState(false);
+
   const { startSSOFlow } = useSSO();
+
   const router = useRouter();
   const handleGoogleLogin = async () => {
+    setLoading(true);
     try {
       const { createdSessionId, setActive } = await startSSOFlow({
         strategy: "oauth_google",
       });
       if (setActive && createdSessionId) {
         setActive({ session: createdSessionId });
-        router.replace("/(tabs)/home");
+        setTimeout(() => {
+          router.replace("/(tabs)/home");
+        }, 500);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (loading)
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color={COLORS.primary} />
+      </View>
+    );
+
   return (
     <View style={styles.container}>
       <View style={styles.brandSection}>
@@ -35,6 +56,8 @@ export default function login() {
         <Image
           source={require("../../assets/images/login.png")}
           style={styles.loginImage}
+          contentFit="cover"
+          transition={200}
         />
       </View>
       <View style={styles.loginSection}>
