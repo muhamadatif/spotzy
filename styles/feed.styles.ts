@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
     marginBottom: 4,
   },
   noStory: {
-    borderColor: COLORS.grey,
+    borderColor: COLORS.gray[100],
   },
   storyAvatar: {
     width: 60,
@@ -125,12 +125,12 @@ export const styles = StyleSheet.create({
   },
   commentsText: {
     fontSize: 14,
-    color: COLORS.grey,
+    color: COLORS.gray[100],
     marginBottom: 4,
   },
   timeAgo: {
     fontSize: 12,
-    color: COLORS.grey,
+    color: COLORS.gray[100],
     marginBottom: 8,
   },
   modalContainer: {
@@ -183,7 +183,7 @@ export const styles = StyleSheet.create({
     lineHeight: 20,
   },
   commentTime: {
-    color: COLORS.grey,
+    color: COLORS.gray[100],
     fontSize: 12,
     marginTop: 4,
   },

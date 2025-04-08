@@ -6,6 +6,8 @@ import { COLORS } from "@/constants/theme";
 // import Story from "@/components/Story";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { STORIES } from "@/constants/mock-data";
+import Story from "@/components/Story";
 export default function Feed() {
   const { signOut } = useAuth();
   const stories = useQuery(api.stories.getAllStories);
@@ -30,7 +32,11 @@ export default function Feed() {
           horizontal
           style={styles.storiesContainer}
           showsHorizontalScrollIndicator={false}
-        ></ScrollView>
+        >
+          {STORIES.map((story) => (
+            <Story key={story.id} story={story} />
+          ))}
+        </ScrollView>
       </ScrollView>
     </View>
   );
