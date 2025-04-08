@@ -2,6 +2,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect } from "react";
 import Loader from "./Loader";
+import { StatusBar } from "react-native";
 
 export default function InitialLayout() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -16,7 +17,13 @@ export default function InitialLayout() {
   }, [isLoaded, isSignedIn, segments]);
 
   if (!isLoaded) return <Loader />;
-  return <Stack screenOptions={{ headerShown: false }} />;
+
+  return (
+    <>
+      <StatusBar />
+      <Stack screenOptions={{ headerShown: false }} />;
+    </>
+  );
 }
 
 // 1- isLoaded is a boolean that indicates whether the Clerk SDK has loaded.

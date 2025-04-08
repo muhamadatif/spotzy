@@ -86,7 +86,7 @@ export default function CreateScreen() {
           style={styles.emptyImageContainer}
           onPress={pickImage}
         >
-          <Ionicons name="image-outline" size={48} color={COLORS.grey} />
+          <Ionicons name="image-outline" size={48} color={COLORS.gray[100]} />
           <Text style={styles.emptyImageText}>Tap to select an image</Text>
         </TouchableOpacity>
       </View>
@@ -111,7 +111,7 @@ export default function CreateScreen() {
             <Ionicons
               name="close-outline"
               size={28}
-              color={isSharing ? COLORS.grey : COLORS.white}
+              color={isSharing ? COLORS.gray[100] : COLORS.white}
             />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>New Post</Text>
@@ -133,7 +133,7 @@ export default function CreateScreen() {
         <ScrollView
           contentContainerStyle={styles.scrollContent}
           bounces={false}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="never"
         >
           <View style={[styles.content, isSharing && styles.contentDisabled]}>
             {/* Image secction */}
@@ -165,7 +165,7 @@ export default function CreateScreen() {
                 <TextInput
                   style={styles.captionInput}
                   placeholder="Write a caption..."
-                  placeholderTextColor={COLORS.grey}
+                  placeholderTextColor={COLORS.gray[100]}
                   multiline
                   value={caption}
                   onChangeText={setCaption}
