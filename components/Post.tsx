@@ -1,12 +1,46 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { styles } from "@/styles/feed.styles";
 import { Link } from "expo-router";
 import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/theme";
+import { Id } from "@/convex/_generated/dataModel";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
-const Post = ({ post }: { post: any }) => {
+type PostProps = {
+  post: {
+    _id: Id<"posts">;
+    imageUrl: string;
+    caption?: string;
+    likes: number;
+    comments: number;
+    _creationTime: number;
+    isLiked: boolean;
+    isBookmarked: boolean;
+    author: {
+      _id: string;
+      username: string;
+      image: string;
+    };
+  };
+};
+
+const Post = ({ post }: PostProps) => {
+  const [isLiked, setIsLiked] = useState(post.isLiked);
+  const [likesCount, setLikesCount] = useState(post.likes);
+  const toggleLike = useMutation(api.posts.toggleLike);
+
+  const handleLike = async () => {
+    try {
+      const newIsLiked = await toggleLike({ postId: post._id });
+      setIsLiked(newIsLiked);
+      setLikesCount((prev) => (newIsLiked ? prev + 1 : prev - 1));
+    } catch (error) {
+      console.log("Error toggling like:", error);
+    }
+  };
   return (
     <View style={styles.post}>
       {/* Post Header */}
@@ -43,7 +77,12 @@ const Post = ({ post }: { post: any }) => {
       <View style={styles.postActions}>
         <View style={styles.postActionsLeft}>
           <TouchableOpacity>
-            <Ionicons name="heart-outline" size={24} color={COLORS.white} />
+            <Ionicons
+              onPress={handleLike}
+              name={isLiked ? "heart" : "heart-outline"}
+              size={24}
+              color={isLiked ? COLORS.primary : COLORS.white}
+            />
           </TouchableOpacity>
           <TouchableOpacity>
             <Ionicons
@@ -59,7 +98,11 @@ const Post = ({ post }: { post: any }) => {
       </View>
       {/* Post Info */}
       <View style={styles.postInfo}>
-        <Text style={styles.likesText}>Be the first to like</Text>
+        <Text style={styles.likesText}>
+          {likesCount > 0
+            ? `${likesCount.toLocaleString()} likes`
+            : "Be the first to like"}
+        </Text>
         {post.caption && (
           <View style={styles.captionContainer}>
             <Text style={styles.captionUsername}>{post.author.username}</Text>
