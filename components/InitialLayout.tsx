@@ -21,7 +21,7 @@ export default function InitialLayout() {
   return (
     <>
       <StatusBar />
-      <Stack screenOptions={{ headerShown: false }} />;
+      <Stack screenOptions={{ headerShown: false }} />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import {
+  FlatList,
   Platform,
   ScrollView,
   Text,
@@ -35,28 +36,32 @@ export default function Feed() {
           <Ionicons name="log-out-outline" size={24} color={COLORS.white} />
         </TouchableOpacity>
       </View>
-      <ScrollView
+
+      {/* Stories */}
+
+      <FlatList
+        data={posts}
+        renderItem={({ item }) => <Post post={item} />}
+        keyExtractor={(item) => item._id}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 60 }}
-      >
-        {/* Stories */}
-
-        <ScrollView
-          horizontal
-          style={styles.storiesContainer}
-          showsHorizontalScrollIndicator={false}
-        >
-          {STORIES.map((story) => (
-            <Story key={story.id} story={story} />
-          ))}
-        </ScrollView>
-        {posts.map((post) => (
-          <Post key={post._id} post={post} />
-        ))}
-      </ScrollView>
+        ListHeaderComponent={<StroiesSection />}
+      />
     </View>
   );
 }
+
+const StroiesSection = () => (
+  <ScrollView
+    horizontal
+    style={styles.storiesContainer}
+    showsHorizontalScrollIndicator={false}
+  >
+    {STORIES.map((story) => (
+      <Story key={story.id} story={story} />
+    ))}
+  </ScrollView>
+);
 
 const NoPostsFound = () => (
   <View
