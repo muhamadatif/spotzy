@@ -1,5 +1,5 @@
 // styles/create.styles.ts
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import { COLORS } from "@/constants/theme";
 
 const { width } = Dimensions.get("window");
@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
   },
   shareTextDisabled: {
-    color: COLORS.grey,
+    color: COLORS.gray[100],
   },
   emptyImageContainer: {
     flex: 1,
@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
     gap: 12,
   },
   emptyImageText: {
-    color: COLORS.grey,
+    color: COLORS.gray[100],
     fontSize: 16,
   },
   content: {
@@ -110,5 +110,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     paddingTop: 8,
     minHeight: 40,
+    marginBottom: 40,
   },
 });

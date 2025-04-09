@@ -7,8 +7,9 @@ import {
   ActivityIndicator,
   ScrollView,
   TextInput,
+  Keyboard,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import { useUser } from "@clerk/clerk-expo";
 import { styles } from "@/styles/createPost.styles";
@@ -19,6 +20,7 @@ import * as FileSystem from "expo-file-system";
 import { Image } from "expo-image";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useNavigation } from "expo-router";
 
 export default function CreateScreen() {
   const router = useRouter();
@@ -26,6 +28,9 @@ export default function CreateScreen() {
   const [caption, setCaption] = useState("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isSharing, setIsSharing] = useState(false);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const navigation = useNavigation();
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -71,6 +76,42 @@ export default function CreateScreen() {
       setIsSharing(false);
     }
   };
+
+  console.log(isKeyboardVisible);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      setKeyboardVisible(true);
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    });
+
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+  useEffect(() => {
+    // This only works if your screen is inside a tab navigator
+    navigation.setOptions({
+      tabBarStyle: {
+        display: isKeyboardVisible ? "none" : "flex",
+        backgroundColor: "black",
+        borderTopWidth: 0,
+        position: "absolute",
+        elevation: 0,
+        height: 50,
+        paddingBottom: 10,
+        bottom: Platform.OS === "android" ? 0 : 20,
+        left: 20,
+        right: 20,
+        borderRadius: 15,
+      },
+    });
+  }, [isKeyboardVisible]);
 
   if (!selectedImage)
     return (
@@ -131,6 +172,7 @@ export default function CreateScreen() {
           </TouchableOpacity>
         </View>
         <ScrollView
+          ref={scrollViewRef}
           contentContainerStyle={styles.scrollContent}
           bounces={false}
           keyboardShouldPersistTaps="never"
