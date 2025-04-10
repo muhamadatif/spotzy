@@ -7,6 +7,9 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { Id } from "@/convex/_generated/dataModel";
@@ -74,6 +77,7 @@ const CommentsModal = ({
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => <Comment comment={item} />}
             contentContainerStyle={styles.commentsList}
+            keyboardShouldPersistTaps="handled"
           />
         )}
         <View style={styles.commentInput}>

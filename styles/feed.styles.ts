@@ -195,6 +195,7 @@ export const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderTopColor: COLORS.surface,
     backgroundColor: COLORS.background,
+    marginBottom: 40,
   },
   input: {
     flex: 1,

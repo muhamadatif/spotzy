@@ -62,6 +62,7 @@ export const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+    backgroundColor: COLORS.background,
   },
   imageSection: {
     width: width,

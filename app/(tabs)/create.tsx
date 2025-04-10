@@ -21,6 +21,7 @@ import { Image } from "expo-image";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useNavigation } from "expo-router";
+import { useKeyboardVisibility } from "@/hooks/useKeyboardVisibility";
 
 export default function CreateScreen() {
   const router = useRouter();
@@ -28,9 +29,10 @@ export default function CreateScreen() {
   const [caption, setCaption] = useState("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isSharing, setIsSharing] = useState(false);
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const navigation = useNavigation();
   const scrollViewRef = useRef<ScrollView>(null);
+
+  const isKeyboardVisible = useKeyboardVisibility();
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -77,23 +79,6 @@ export default function CreateScreen() {
     }
   };
 
-  console.log(isKeyboardVisible);
-
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
-      setKeyboardVisible(true);
-      scrollViewRef.current?.scrollToEnd({ animated: true });
-    });
-
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
-      setKeyboardVisible(false);
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
   useEffect(() => {
     // This only works if your screen is inside a tab navigator
     navigation.setOptions({
