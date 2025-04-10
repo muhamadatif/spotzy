@@ -13,6 +13,7 @@ import { COLORS } from "@/constants/theme";
 import { useSSO } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
+import Loader from "@/components/Loader";
 export default function login() {
   const [loading, setLoading] = useState(false);
 
@@ -27,21 +28,17 @@ export default function login() {
       });
       if (setActive && createdSessionId) {
         setActive({ session: createdSessionId });
-        setTimeout(() => {
-          router.replace("/(tabs)/home");
-        }, 500);
+
+        router.push("/(tabs)/home");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (loading)
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color={COLORS.primary} />
-      </View>
-    );
+  if (loading) return <Loader />;
 
   return (
     <View style={styles.container}>

@@ -71,6 +71,8 @@ export default function CreateScreen() {
         storageId,
         caption,
       });
+      setSelectedImage(null);
+      setCaption("");
       router.push("/(tabs)/home");
     } catch (error) {
       console.error(error);
