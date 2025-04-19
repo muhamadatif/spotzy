@@ -1,24 +1,22 @@
+import { COLORS } from "@/constants/theme";
+import { styles } from "@/styles/feed.styles";
+import { useAuth } from "@clerk/clerk-expo";
+import { Ionicons } from "@expo/vector-icons";
 import {
   FlatList,
-  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import { styles } from "@/styles/feed.styles";
-import { useAuth } from "@clerk/clerk-expo";
-import { Ionicons } from "@expo/vector-icons";
-import { COLORS } from "@/constants/theme";
-// import Story from "@/components/Story";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { STORIES } from "@/constants/mock-data";
-import Story from "@/components/Story";
-import React from "react";
 import Loader from "@/components/Loader";
 import Post from "@/components/Post";
 import Stories from "@/components/Stories";
+import Story from "@/components/Story";
+import { STORIES } from "@/constants/mock-data";
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
+import React from "react";
 export default function Feed() {
   const { signOut } = useAuth();
   const posts = useQuery(api.posts.getFeedPosts);
