@@ -18,6 +18,7 @@ import Story from "@/components/Story";
 import React from "react";
 import Loader from "@/components/Loader";
 import Post from "@/components/Post";
+import Stories from "@/components/Stories";
 export default function Feed() {
   const { signOut } = useAuth();
   const posts = useQuery(api.posts.getFeedPosts);
@@ -45,7 +46,7 @@ export default function Feed() {
         keyExtractor={(item) => item._id}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 60 }}
-        ListHeaderComponent={<StroiesSection />}
+        ListHeaderComponent={<Stories />}
       />
     </View>
   );
