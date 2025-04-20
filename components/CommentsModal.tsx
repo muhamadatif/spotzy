@@ -25,15 +25,9 @@ type CommentsModal = {
   postId: Id<"posts">;
   visible: boolean;
   onClose: () => void;
-  onAddComment: () => void;
 };
 
-const CommentsModal = ({
-  postId,
-  visible,
-  onClose,
-  onAddComment,
-}: CommentsModal) => {
+const CommentsModal = ({ postId, visible, onClose }: CommentsModal) => {
   const [newComment, setNewComment] = useState("");
   const comments = useQuery(api.comments.getComments, { postId });
   const addComment = useMutation(api.comments.addComment);
@@ -46,7 +40,6 @@ const CommentsModal = ({
         postId,
       });
       setNewComment("");
-      onAddComment();
     } catch (error) {
       console.log("Error adding comment", error);
     }
