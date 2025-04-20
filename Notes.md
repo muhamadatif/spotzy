@@ -17,7 +17,7 @@ render all data at once
 
 It is used with complext ineraction states
 
-## Pressable
+## TouchableOpacity
 
 It is used when we want simple fade effect
 
@@ -25,11 +25,11 @@ It is used when we want simple fade effect
 
 3-Expo Image vs React Native Image
 
-## Pressable
+## Expo Image
 
 It is used for better performance and cashing
 
-## Pressable
+## React Native Image
 
 It is used when we want to display a basic image with minimal configuration
 

@@ -9,12 +9,16 @@ import { formatDistanceToNow } from "date-fns";
 import { NotificationType } from "@/types";
 
 const Notification = ({ notification }: { notification: NotificationType }) => {
-  console.log(notification);
-
   return (
     <View style={styles.notificationItem}>
       <View style={styles.notificationContent}>
-        <Link href={`/notifications`} asChild>
+        <Link
+          href={{
+            pathname: "/user/[id]",
+            params: { id: notification.sender._id },
+          }}
+          asChild
+        >
           <TouchableOpacity style={styles.avatarContainer}>
             <Image
               source={notification.sender.image}
@@ -34,7 +38,13 @@ const Notification = ({ notification }: { notification: NotificationType }) => {
           </TouchableOpacity>
         </Link>
         <View style={styles.notificationInfo}>
-          <Link href={`/notifications`} asChild>
+          <Link
+            href={{
+              pathname: "/user/[id]",
+              params: { id: notification.sender._id },
+            }}
+            asChild
+          >
             <TouchableOpacity>
               <Text style={styles.username}>
                 {notification.sender.username}
